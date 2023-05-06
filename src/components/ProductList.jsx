@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { addProduct, removeProduct } from "../store/productsSlice";
+import { addProduct } from "../store/productsSlice";
 import { idGenerator } from "./GenerateNewId";
+import { ProductItem } from "./ProductItem";
 
 function ProductList() {
   const products = useSelector((state) => state.products.products);
@@ -9,9 +10,6 @@ function ProductList() {
   const handleAddProduct = () => {
     const id = idGenerator();
     dispatch(addProduct({ id, name: `Product: ${id}`, price: 30 }));
-  };
-  const handleRemoveProduct = (id) => {
-    dispatch(removeProduct(id));
   };
 
   return (
@@ -22,12 +20,7 @@ function ProductList() {
       </button>
       <ul>
         {products.map((product) => (
-          <li key={product.id}>
-            {product.name} : {product.price}
-            <button onClick={() => handleRemoveProduct(product.id)}>
-              Remove
-            </button>
-          </li>
+          <ProductItem key={product.id} Product={product} />
         ))}
       </ul>
     </div>
